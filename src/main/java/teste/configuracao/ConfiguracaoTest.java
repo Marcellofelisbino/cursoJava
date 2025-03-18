@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Profile;
 import teste.entidade.Categoria;
 import teste.entidade.ItemOrdemDePedido;
 import teste.entidade.OrdemDePedido;
+import teste.entidade.Pagamento;
 import teste.entidade.Produto;
 import teste.entidade.Usuario;
 import teste.entidade.enums.StatusOrdemDePedido;
@@ -86,6 +87,10 @@ public class ConfiguracaoTest implements CommandLineRunner{
 			auxUsuario.saveAll(Arrays.asList(u1, u2, u3));
 			auxOrdemDePedido.saveAll(Arrays.asList(o1, o2, o3, o4));					
 			
-			auxItemOrdemDePedido.saveAll(Arrays.asList(iop1, iop2, iop3, iop4, iop5));			
+			auxItemOrdemDePedido.saveAll(Arrays.asList(iop1, iop2, iop3, iop4, iop5));
+			
+			Pagamento pag1 =  new Pagamento(null,Instant.parse("2019-06-20T21:53:07Z"), o1);
+			o1.setPagamento(pag1); // associou "o1" com "pag1"
+			auxOrdemDePedido.saveAll(Arrays.asList(o1)); //nao atualizou a ordem de pedido, porem serve pra atualizar o pagamento com o status
 		}
 }
