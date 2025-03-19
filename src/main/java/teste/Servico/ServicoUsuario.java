@@ -28,4 +28,8 @@ public class ServicoUsuario {
 	public Usuario insere(Usuario wobjeto) {
 		return repositorio.save(wobjeto);
 	}
+	
+	public void deleta(Long id) {
+		repositorio.deleteById(id);		
+	}
 }

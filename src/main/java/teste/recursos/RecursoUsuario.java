@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,12 +35,18 @@ public class RecursoUsuario {
 		Usuario wObjeto = servicoAux.findById(id);
 		return ResponseEntity.ok().body(wObjeto);
 	}
-@PostMapping // comando pra gravar na tablea
+@PostMapping // comando pra gravar na tabela
 	public ResponseEntity<Usuario> insere(@RequestBody Usuario wObjeto) { //@RquestBody transforma json recebido em formato tabela
 		wObjeto =  servicoAux.insere(wObjeto);
 // buscar uri pra retornar, pra insercao, nao deve retornar 200, mas sim 201
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
 				.buildAndExpand(wObjeto.getId()).toUri();
 		return ResponseEntity.created(uri).body(wObjeto);
+	}
+@DeleteMapping(value = "/{id}")  // comando pra deletar da tabela
+//VOID porque nao vai retornar nada
+	public ResponseEntity<Void> deleta(@PathVariable Long id){ //@PathVariable serve para reconhecer que o Id vai vir da URL
+		servicoAux.deleta(id);
+		return ResponseEntity.noContent().build();	//noContent é resposta vazia e ja trata o codigo retorno 204
 	}
 }
