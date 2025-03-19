@@ -5,6 +5,7 @@ import java.time.Instant;
 import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -27,6 +28,7 @@ public class Pagamento implements Serializable{
 
 @OneToOne
 @MapsId
+//
 	private OrdemDePedido OrdemDePedido;
 
 // construtores	
@@ -48,11 +50,11 @@ public class Pagamento implements Serializable{
 	public void setOrdemDePedido(OrdemDePedido ordemDePedido) 	{	OrdemDePedido = ordemDePedido;	}
 
 //hashCode and equals	
-	@Override
+@Override
 	public int hashCode() {
 		return Objects.hash(id);
 	}
-	@Override
+@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;

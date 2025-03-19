@@ -7,6 +7,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -22,7 +23,6 @@ import teste.entidade.enums.StatusOrdemDePedido;
 
 @Entity // injecao de depencencia nesessario para as entidades
 @Table(name="TB_OrdemDePedido")
-
 
 public class OrdemDePedido implements Serializable {		
 	private static final long serialVersionUID = 1L;
@@ -41,7 +41,8 @@ public class OrdemDePedido implements Serializable {
 	
 @OneToMany(mappedBy = "id.ordemDePedido")
 	private Set<ItemOrdemDePedido> itens = new HashSet<>();
-	
+
+@JsonIgnore
 @OneToOne(mappedBy= "OrdemDePedido" , cascade = CascadeType.ALL) //comando cascade para  o pagamento ter a mesma chave do ordemDePedido
 private Pagamento pagamento;
 	
@@ -71,7 +72,17 @@ private Pagamento pagamento;
 	public Set<ItemOrdemDePedido> getItens() 				{	return itens;								}			
 	public Pagamento getPagamento() 						{	return pagamento;							}
 	public void setPagamento(Pagamento pagamento) 			{	this.pagamento = pagamento; 				}
-	
+
+// metodo total
+		public Double getTotal() {
+			double soma= 0.0;
+			for (ItemOrdemDePedido x : itens) {
+				soma += x.getSubTotal();
+			}
+			return soma;
+		}
+		
+// hashcode and equals	
 @Override
 	public int hashCode() {
 		return Objects.hash(id);

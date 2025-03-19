@@ -30,19 +30,22 @@ public class ItemOrdemDePedido implements Serializable{
 	}	
 	
 // metodo get e setters
-	@JsonIgnore
+@JsonIgnore
 	public OrdemDePedido getOrdemDePedido() 					{	return id.getOrdemDePedido();		}
-	public void setOrdemDePedido(OrdemDePedido ordemDePedido) 	{ 	id.setOrdemDePedido(ordemDePedido); }	
+	public void setOrdemDePedido(OrdemDePedido ordemDePedido) 	{ 	id.setOrdemDePedido(ordemDePedido); }
 	
 	public Produto getProduto() 								{	return id.getProduto();				}
-	public void setProduto	(Produto produto) 					{ 	id.setProduto(produto);   			}
-	
+	public void setProduto	(Produto produto) 					{ 	id.setProduto(produto);   			}	
 	public Integer getQuantidade() 								{		return quantidade;				}
 	public void setQuantidade(Integer quantidade) 				{		this.quantidade = quantidade;	}
 	public Double getPreco() 									{		return preco;					}
 	public void setPreco(Double preco) 							{		this.preco = preco;				}
 
-	
+// metodo subtotal
+	public Double getSubTotal() {
+		return preco * quantidade;
+	}
+
 //hash code and equals
 	@Override
 	public boolean equals (Object obj) {
