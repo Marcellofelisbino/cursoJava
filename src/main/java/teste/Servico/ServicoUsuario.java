@@ -11,17 +11,21 @@ import teste.repositorios.RepositorioUsuario;
 
 @Service //Injecao de dependencia
 public class ServicoUsuario {
-
-		@Autowired
-		private RepositorioUsuario repositorio;
+	
+	@Autowired
+	private RepositorioUsuario repositorio;
 		
 // SERVICO NEGOCIO PRA BUSCAR TODOS OS USUARIOS		
-		public List<Usuario> findAll() {
-			return repositorio.findAll();
-		}
+	public List<Usuario> findAll() {
+		return repositorio.findAll();
+	}
 // SERVICO NEGOCIO PRA BUSCAR TODOS OS USUARIOS	
-		public Usuario findById(Long id) {			
-			Optional<Usuario> wObjeto  = repositorio.findById(id);			
-			return wObjeto.get();
-		}
+	public Usuario findById(Long id) {			
+		Optional<Usuario> wObjeto  = repositorio.findById(id);			
+		return wObjeto.get();
+	}
+//
+	public Usuario insere(Usuario wobjeto) {
+		return repositorio.save(wobjeto);
+	}
 }
