@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -48,5 +49,11 @@ public class RecursoUsuario {
 	public ResponseEntity<Void> deleta(@PathVariable Long id){ //@PathVariable serve para reconhecer que o Id vai vir da URL
 		servicoAux.deleta(id);
 		return ResponseEntity.noContent().build();	//noContent é resposta vazia e ja trata o codigo retorno 204
+	}
+@PutMapping(value = "/{id}")  // comando pra atualizar tabela 
+
+	public ResponseEntity<Usuario> atualiza(@PathVariable Long id, @RequestBody Usuario wObjeto){ 
+		wObjeto = servicoAux.atualiza(id, wObjeto); 
+		return ResponseEntity.ok().body(wObjeto);
 	}
 }
