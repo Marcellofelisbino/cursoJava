@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import teste.Servico.exceptions.ExceptionRecursoNãoEncontrado;
 import teste.entidade.Usuario;
 import teste.repositorios.RepositorioUsuario;
 
@@ -22,7 +23,7 @@ public class ServicoUsuario {
 // SERVICO NEGOCIO PRA BUSCAR USUARIO	
 	public Usuario findById(Long id) {			
 		Optional<Usuario> wObjeto  = repositorio.findById(id);			
-		return wObjeto.get();
+		return wObjeto.orElseThrow(() -> new ExceptionRecursoNãoEncontrado(id));
 	}
 // SERVICO NEGOCIO PRA inserir usuario
 	public Usuario insere(Usuario wObjeto) {
