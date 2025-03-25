@@ -4,8 +4,11 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
+import teste.Servico.exceptions.ExceptionBaseDeDados;
 import teste.Servico.exceptions.ExceptionRecursoNãoEncontrado;
 import teste.entidade.Usuario;
 import teste.repositorios.RepositorioUsuario;
@@ -31,7 +34,14 @@ public class ServicoUsuario {
 	}
 // SERVICO NEGOCIO PRA deletar usuario	
 	public void deleta(Long id) {
-		repositorio.deleteById(id);		
+		try {
+			repositorio.deleteById(id);
+		} catch (EmptyResultDataAccessException e) {
+			throw new ExceptionRecursoNãoEncontrado(id);
+		} catch (DataIntegrityViolationException e) {		
+			throw new ExceptionBaseDeDados(e.getMessage());
+		}
+		
 	}
 // SERVICO NEGOCIO PRA atualizar usuario
 	public Usuario  atualiza(Long id,Usuario wObjeto) {

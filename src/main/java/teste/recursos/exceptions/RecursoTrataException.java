@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import jakarta.servlet.http.HttpServletRequest;
+import teste.Servico.exceptions.ExceptionBaseDeDados;
 import teste.Servico.exceptions.ExceptionRecursoNãoEncontrado;
 
 @ControllerAdvice
@@ -20,4 +21,13 @@ public class RecursoTrataException {
 	ErroPadrao erro = new ErroPadrao(Instant.now(), status.value(), mensagemErro, e.getMessage(), requisicao.getRequestURI());
 	return ResponseEntity.status(status).body(erro);
 	}
+@ExceptionHandler(ExceptionBaseDeDados.class)	
+	public ResponseEntity<ErroPadrao> ExceptionBaseDeDados(ExceptionBaseDeDados e, HttpServletRequest requisicao){
+	String mensagemErro = "Erro nos dados tratados"; 
+	HttpStatus status = HttpStatus.BAD_REQUEST;
+	// status.value() precisa ser assim pra transformar em inteiro
+	ErroPadrao erro = new ErroPadrao(Instant.now(), status.value(), mensagemErro, e.getMessage(), requisicao.getRequestURI());
+	return ResponseEntity.status(status).body(erro);
+}
+
 }
